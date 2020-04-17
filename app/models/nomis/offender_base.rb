@@ -5,7 +5,7 @@ module Nomis
              :home_detention_curfew_actual_date,
              :conditional_release_date, :release_date,
              :parole_eligibility_date, :tariff_date,
-             :automatic_release_date,
+             :automatic_release_date, :licence_expiry_date, :actual_parole_date,
              to: :sentence
 
     attr_accessor :convicted_status, :booking_id,

@@ -15,8 +15,8 @@ class OffenderPresenter
            :awaiting_allocation_for, :allocated_pom_name, :allocation_date, :allocated_com_name,
            :tier, :parole_review_date, :crn, :convicted_status, :convicted?, :ldu,
            :handover_start_date, :responsibility_handover_date, :handover_reason, :prison_arrival_date,
-           :post_recall_release_date, :post_recall_release_override_date,
-           :over_18?, :recalled?, :sentenced?, :immigration_case?, :mappa_level,  to: :@offender
+           :post_recall_release_date, :post_recall_release_override_date, :licence_expiry_date, :actual_parole_date,
+           :over_18?, :recalled?, :sentenced?, :immigration_case?, :mappa_level, to: :@offender
 
   def initialize(offender, responsibility)
     @offender = offender
@@ -42,9 +42,9 @@ class OffenderPresenter
     rec_type = RecommendationService.recommended_pom_type(@offender)
 
     if rec_type == RecommendationService::PRISON_POM
-      'Prison officer'
+      "Prison officer"
     else
-      'Probation officer'
+      "Probation officer"
     end
   end
 
@@ -54,17 +54,17 @@ class OffenderPresenter
 
   def non_recommended_pom_type_label
     if recommended_pom_type == RecommendationService::PRISON_POM
-      'Probation officer'
+      "Probation officer"
     else
-      'Prison officer'
+      "Prison officer"
     end
   end
 
   def complex_reason_label
     if recommended_pom_type == RecommendationService::PRISON_POM
-      'Prisoner assessed as not suitable for a prison officer POM'
+      "Prisoner assessed as not suitable for a prison officer POM"
     else
-      'Prisoner assessed as suitable for a prison officer POM despite tiering calculation'
+      "Prisoner assessed as suitable for a prison officer POM despite tiering calculation"
     end
   end
 end

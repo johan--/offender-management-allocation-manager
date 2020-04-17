@@ -1,25 +1,4 @@
-<table class="govuk-table">
-  <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-      <td class="govuk-table__header govuk-!-width-one-half" scope="row">Offence</td>
-      <td class="govuk-table__cell govuk-!-width-one-half"></td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell govuk-!-width-one-half">Main offence</td>
-      <td class="govuk-table__cell table_cell__left_align  govuk-!-width-one-half"><%= @prisoner.main_offence %></td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">Sentence type</td>
-      <td class="govuk-table__cell table_cell__left_align">
-          <%= sentence_type_label(@prisoner) %>
-      </td>
-    </tr>
-    <tr class="govuk-table__row">
-      <td class="govuk-table__cell">Sentence start date</td>
-      <td class="govuk-table__cell table_cell__left_align">
-        <%= format_date(@prisoner.sentence_start_date, replacement: 'N/A') %>
-      </td>
-    </tr>
+</tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">Conditional release date</td>
       <td class="govuk-table__cell table_cell__left_align">
@@ -61,6 +40,22 @@
         <% else %>
           N/A
         <% end %>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Prisoner recall release date</td>
+      <td class="govuk-table__cell table_cell__left_align">
+        <% if @prisoner.actual_parole_date && (@prisoner.actual_parole_date < @prisoner.post_recall_release_override_date)%>
+          <%=format_date(@prisoner.actual_parole_date)%>
+        <%else %>
+          <%=format_date(@prisoner.post_recall_release_override_date, replacement: 'N/A') %>
+        <%end%>
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">Sentence/license end date</td>
+      <td class="govuk-table__cell table_cell__left_align">
+        <%= format_date(@prisoner.licence_expiry_date, replacement: 'N/A') %>
       </td>
     </tr>
   </tbody>

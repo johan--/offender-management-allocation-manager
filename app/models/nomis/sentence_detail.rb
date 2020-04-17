@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+frozen_string_literal: true
 
 module Nomis
   class SentenceDetail
@@ -12,7 +12,9 @@ module Nomis
                   :post_recall_release_override_date,
                   :release_date,
                   :sentence_start_date,
-                  :tariff_date
+                  :tariff_date,
+                  :licence_expiry_date,
+                  :actual_parole_date
 
     attr_writer :automatic_release_date,
                 :automatic_release_override_date,
@@ -34,7 +36,7 @@ module Nomis
           home_detention_curfew_actual_date,
           home_detention_curfew_eligibility_date,
           parole_eligibility_date,
-          tariff_date
+          tariff_date,
       ].compact
       return nil if dates.empty?
 
@@ -56,36 +58,36 @@ module Nomis
       "#{last_name}, #{first_name}".titleize
     end
 
-    # rubocop:disable Metrics/MethodLength
     def self.from_json(payload)
       SentenceDetail.new.tap { |obj|
-        obj.first_name = payload['firstName']
-        obj.last_name = payload['lastName']
+        obj.first_name = payload["firstName"]
+        obj.last_name = payload["lastName"]
 
-        obj.parole_eligibility_date = deserialise_date(payload, 'paroleEligibilityDate')
-        obj.release_date = deserialise_date(payload, 'releaseDate')
-        obj.sentence_start_date = deserialise_date(payload, 'sentenceStartDate')
-        obj.tariff_date = deserialise_date(payload, 'tariffDate')
-        obj.automatic_release_date = deserialise_date(payload, 'automaticReleaseDate')
-        obj.post_recall_release_date = deserialise_date(payload, 'postRecallReleaseDate')
-        obj.post_recall_release_override_date = deserialise_date(payload, 'postRecallReleaseOverrideDate')
+        obj.parole_eligibility_date = deserialise_date(payload, "paroleEligibilityDate")
+        obj.release_date = deserialise_date(payload, "releaseDate")
+        obj.sentence_start_date = deserialise_date(payload, "sentenceStartDate")
+        obj.tariff_date = deserialise_date(payload, "tariffDate")
+        obj.automatic_release_date = deserialise_date(payload, "automaticReleaseDate")
+        obj.post_recall_release_date = deserialise_date(payload, "postRecallReleaseDate")
+        obj.post_recall_release_override_date = deserialise_date(payload, "postRecallReleaseOverrideDate")
+        obj.licence_expiry_date = deserialise_date(payload, "licenceExpiryDate")
+        obj.actual_parole_date = deserialise_date(payload, "actualParoleDate")
         obj.conditional_release_date = deserialise_date(
-          payload, 'conditionalReleaseDate'
+          payload, "conditionalReleaseDate"
         )
         obj.automatic_release_override_date = deserialise_date(
-          payload, 'automaticReleaseOverrideDate'
+          payload, "automaticReleaseOverrideDate"
         )
         obj.home_detention_curfew_eligibility_date = deserialise_date(
-          payload, 'homeDetentionCurfewEligibilityDate'
+          payload, "homeDetentionCurfewEligibilityDate"
         )
         obj.home_detention_curfew_actual_date = deserialise_date(
-          payload, 'homeDetentionCurfewActualDate'
+          payload, "homeDetentionCurfewActualDate"
         )
         obj.conditional_release_override_date = deserialise_date(
-          payload, 'conditionalReleaseOverrideDate'
+          payload, "conditionalReleaseOverrideDate"
         )
       }
     end
-    # rubocop:enable Metrics/MethodLength
   end
 end
