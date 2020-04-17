@@ -21,7 +21,7 @@ module Nomis
                   :ldu, :team
 
     def convicted?
-      convicted_status == 'Convicted'
+      convicted_status == "Convicted"
     end
 
     def sentenced?
@@ -36,9 +36,9 @@ module Nomis
       return false if sentence&.sentence_start_date.blank?
 
       sentence.release_date.present? ||
-      sentence.parole_eligibility_date.present? ||
-      sentence.home_detention_curfew_eligibility_date.present? ||
-      sentence.tariff_date.present? ||
+        sentence.parole_eligibility_date.present? ||
+        sentence.home_detention_curfew_eligibility_date.present? ||
+        sentence.tariff_date.present? ||
         @sentence_type.indeterminate_sentence?
     end
 
@@ -47,7 +47,7 @@ module Nomis
     end
 
     def nps_case?
-      case_allocation == 'NPS'
+      case_allocation == "NPS"
     end
 
     def sentence_type_code
@@ -80,7 +80,7 @@ module Nomis
     end
 
     def immigration_case?
-      sentence_type_code == 'DET'
+      sentence_type_code == "DET"
     end
 
     def earliest_release_date
@@ -123,13 +123,13 @@ module Nomis
       # It is expected that this method will be called by the subclass which
       # will have been given a payload at the class level, and will call this
       # method from it's own internal from_json
-      @first_name = payload['firstName']
-      @last_name = payload['lastName']
-      @offender_no = payload['offenderNo']
-      @convicted_status = payload['convictedStatus']
-      @sentence_type = SentenceType.new(payload['imprisonmentStatus'])
-      @category_code = payload['categoryCode']
-      @date_of_birth = deserialise_date(payload, 'dateOfBirth')
+      @first_name = payload["firstName"]
+      @last_name = payload["lastName"]
+      @offender_no = payload["offenderNo"]
+      @convicted_status = payload["convictedStatus"]
+      @sentence_type = SentenceType.new(payload["imprisonmentStatus"])
+      @category_code = payload["categoryCode"]
+      @date_of_birth = deserialise_date(payload, "dateOfBirth")
       @early_allocation = false
     end
 
@@ -154,7 +154,7 @@ module Nomis
 
       @tier = record.tier
       @case_allocation = record.case_allocation
-      @welsh_offender = record.welsh_offender == 'Yes'
+      @welsh_offender = record.welsh_offender == "Yes"
       @crn = record.crn
       @mappa_level = record.mappa_level
       @ldu = record.local_divisional_unit
