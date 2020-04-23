@@ -9,17 +9,18 @@ module Nomis
                   :home_detention_curfew_actual_date,
                   :parole_eligibility_date,
                   :post_recall_release_date,
-                  :post_recall_release_override_date,
                   :release_date,
                   :sentence_start_date,
                   :tariff_date,
-                  :licence_expiry_date,
-                  :actual_parole_date
+                  :licence_expiry_date
 
     attr_writer :automatic_release_date,
                 :automatic_release_override_date,
                 :conditional_release_date,
-                :conditional_release_override_date
+                :conditional_release_override_date,
+                :post_recall_release_override_date,
+                :actual_parole_date
+
 
     def automatic_release_date
       @automatic_release_override_date.presence || @automatic_release_date
@@ -27,6 +28,16 @@ module Nomis
 
     def conditional_release_date
       @conditional_release_override_date.presence || @conditional_release_date
+    end
+
+    def recall_release_date
+      if @actual_parole_date.presence
+        if @post_recall_release_override_date.nil? || @post_recall_release_override_date > @actual_parole_date
+          @actual_parole_date
+        else
+          @post_recall_release_override_date.presence || @post_recall_release_date
+        end
+      end
     end
 
     def earliest_release_date
