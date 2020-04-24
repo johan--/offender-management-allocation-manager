@@ -96,20 +96,9 @@ describe Nomis::SentenceDetail, model: true do
         subject.post_recall_release_override_date = no_date
         subject.post_recall_release_date = no_date
       end
-      it "returns N/A" do
+      it "shows N/A" do
         expect(subject.recall_release_date).to eq(no_date)
       end
     end
   end
 end
-
-
-
-
-
-# Test 4
-# actual_parole_date exists but is greater than recall_release_override_date
-# recall_release_override_date is not present
-# post_recall_release_date is not present
-
-# Should return N/A
