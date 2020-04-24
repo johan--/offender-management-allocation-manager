@@ -50,4 +50,67 @@ describe Nomis::SentenceDetail, model: true do
       end
     end
   end
+
+  describe '#recall_release_date' do
+    let(:earlier_date) { Date.new(2019, 2, 3) }
+    let(:later_date) { Date.new(2019, 5, 4) }
+    let(:no_date) { nil }
+
+    context 'actual_parole_date exists and comes before post_recall_release_override_date' do
+      before do
+        subject.actual_parole_date = earlier_date
+        subject.post_recall_release_override_date = later_date
+      end
+
+      it 'shows actual_parole_date' do 
+        expect(subject.recall_release_date).to eq(earlier_date)
+      end
+    end
+
+    context 'actual_parole_date exists and comes after post_recall_release_override_date' do
+      before do
+        subject.actual_parole_date = later_date
+        subject.post_recall_release_override_date = earlier_date
+      end
+
+      it 'shows post_recall_release_override_date' do
+        expect(subject.recall_release_date).to eq(earlier_date)
+      end
+    end
+
+    context 'actual_parole_date is not present and post_recall_release_override_date comes after post_recall_release_date' do
+      before do
+        subject.actual_parole_date = no_date
+        subject.post_recall_release_override_date = later_date
+        subject.post_recall_release_date = earlier_date
+      end
+
+      it 'shows post_recall_release_date' do
+        expect(subject.recall_release_date).to eq(earlier_date)
+      end
+    end
+
+    context 'actual_parole_date, post_recall_release_override_date and post_recall_release_date are not present' do
+      before do
+        subject.actual_parole_date = no_date
+        subject.post_recall_release_override_date = no_date
+        subject.post_recall_release_date = no_date
+      end
+      it 'returns N/A' do
+        expect(subject.recall_release_date).to eq(no_date)
+      end
+    end
+  end
 end
+
+
+
+
+
+# Test 4
+# actual_parole_date exists but is greater than recall_release_override_date
+# recall_release_override_date is not present
+# post_recall_release_date is not present
+
+# Should return N/A
+
