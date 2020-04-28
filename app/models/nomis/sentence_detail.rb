@@ -35,7 +35,7 @@ module Nomis
         @actual_parole_date
       else
         @post_recall_release_override_date.presence || @post_recall_release_date
-      end 
+      end
     end
 
     def earliest_release_date

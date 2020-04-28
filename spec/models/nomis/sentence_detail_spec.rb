@@ -108,6 +108,7 @@ describe Nomis::SentenceDetail, model: true do
         subject.post_recall_release_override_date = no_date
         subject.post_recall_release_date = no_date
       end
+
       it "shows nil" do
         expect(subject.recall_release_date).to eq(no_date)
       end
