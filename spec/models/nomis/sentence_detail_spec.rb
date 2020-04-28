@@ -60,6 +60,7 @@ describe Nomis::SentenceDetail, model: true do
       before do
         subject.actual_parole_date = earlier_date
         subject.post_recall_release_override_date = later_date
+        subject.post_recall_release_date = no_date
       end
 
       it "shows actual_parole_date" do
@@ -78,10 +79,21 @@ describe Nomis::SentenceDetail, model: true do
       end
     end
 
-    context "actual_parole_date is not present and post_recall_release_override_date comes after post_recall_release_date" do
+    context "actual_parole_date is not present and post_recall_release_override_date is" do
       before do
         subject.actual_parole_date = no_date
-        subject.post_recall_release_override_date = later_date
+        subject.post_recall_release_override_date = earlier_date
+      end
+
+      it "shows post_recall_release_override_date" do
+        expect(subject.recall_release_date).to eq(earlier_date)
+      end
+    end
+
+    context "actual_parole_date is not present and post_recall_release_override_date is not present" do
+      before do
+        subject.actual_parole_date = no_date
+        subject.post_recall_release_override_date = no_date
         subject.post_recall_release_date = earlier_date
       end
 
@@ -96,7 +108,7 @@ describe Nomis::SentenceDetail, model: true do
         subject.post_recall_release_override_date = no_date
         subject.post_recall_release_date = no_date
       end
-      it "shows N/A" do
+      it "shows nil" do
         expect(subject.recall_release_date).to eq(no_date)
       end
     end

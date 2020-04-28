@@ -31,13 +31,11 @@ module Nomis
     end
 
     def recall_release_date
-      if @actual_parole_date.presence
-        if @post_recall_release_override_date.nil? || @post_recall_release_override_date > @actual_parole_date
-          @actual_parole_date
-        else
-          @post_recall_release_override_date.presence || @post_recall_release_date
-        end
-      end
+      if @actual_parole_date.presence && @actual_parole_date < @post_recall_release_override_date
+        @actual_parole_date
+      else
+        @post_recall_release_override_date.presence || @post_recall_release_date
+      end 
     end
 
     def earliest_release_date
