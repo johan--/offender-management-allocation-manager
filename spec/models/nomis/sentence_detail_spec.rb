@@ -56,7 +56,7 @@ describe Nomis::SentenceDetail, model: true do
     let(:later_date) { Date.new(2019, 5, 4) }
     let(:no_date) { nil }
 
-    context "actual_parole_date exists and comes before post_recall_release_override_date" do
+    context "when actual_parole_date exists and comes before post_recall_release_override_date" do
       before do
         subject.actual_parole_date = earlier_date
         subject.post_recall_release_override_date = later_date
@@ -68,7 +68,7 @@ describe Nomis::SentenceDetail, model: true do
       end
     end
 
-    context "actual_parole_date exists and comes after post_recall_release_override_date" do
+    context "when actual_parole_date exists and comes after post_recall_release_override_date" do
       before do
         subject.actual_parole_date = later_date
         subject.post_recall_release_override_date = earlier_date
@@ -79,7 +79,7 @@ describe Nomis::SentenceDetail, model: true do
       end
     end
 
-    context "actual_parole_date is not present and post_recall_release_override_date is" do
+    context "when actual_parole_date is not present and post_recall_release_override_date is" do
       before do
         subject.actual_parole_date = no_date
         subject.post_recall_release_override_date = earlier_date
@@ -90,7 +90,7 @@ describe Nomis::SentenceDetail, model: true do
       end
     end
 
-    context "actual_parole_date is not present and post_recall_release_override_date is not present" do
+    context "when actual_parole_date is not present and post_recall_release_override_date is not present" do
       before do
         subject.actual_parole_date = no_date
         subject.post_recall_release_override_date = no_date
@@ -102,7 +102,7 @@ describe Nomis::SentenceDetail, model: true do
       end
     end
 
-    context "actual_parole_date, post_recall_release_override_date and post_recall_release_date are not present" do
+    context "when actual_parole_date, post_recall_release_override_date and post_recall_release_date are not present" do
       before do
         subject.actual_parole_date = no_date
         subject.post_recall_release_override_date = no_date
