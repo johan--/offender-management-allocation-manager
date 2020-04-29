@@ -35,3 +35,9 @@
 # Ignore VIM swap files
 *.swp
 *.swo
+
+#Visual Studio
+.vscode/
+
+#Bash
+bash_profile
